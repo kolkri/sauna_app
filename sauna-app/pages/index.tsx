@@ -1,46 +1,72 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
+import { MongoClient } from 'mongodb'
 
-const DUMMY_SAUNAS_API = [
-  {
-    id: 's1',
-    title: 'Sauna 1',
-    address: 'Saunakatu 1',
-    description: 'description about sauna 1'
-  },
-  {
-    id: 's2',
-    title: 'Sauna 2',
-    address: 'Saunakatu 2',
-    description: 'description about sauna 2'
-  },
-  {
-    id: 's3',
-    title: 'Sauna 3',
-    address: 'Saunakatu 3',
-    description: 'description about sauna 3'
-  },
-]
+interface SingleSauna {
+  name: string;
+  id: string;
+  address: string;
+  saunaType: string[];
+  website: string;
+  description: string;
+  swimming: string[];
+  price: number;
+  service: string[]
+}
+
+interface SaunaData {
+  saunas: SingleSauna[];
+}
 
 
-function SaunaPage() {
+function SaunaPage(props: SaunaData) {
 
-    return (
-        <div className={styles.container}>
-          <main className={styles.main}>
-            <h1 className={styles.title}>
-              Saunas page!
-            </h1>
-            <ul>
-                {DUMMY_SAUNAS_API.map(sauna =>(
-                  <li key={sauna.id}>
-                    <Link href={`/${sauna.title}`}>{sauna.title}</Link>
-                  </li>
-                ))}
-            </ul>
-          </main>
-        </div>
-      )
+  return (
+  <div className={styles.container}>
+    <main className={styles.main}>
+      <h1 className={styles.title}>
+        Saunas page!
+      </h1>
+      <div className='cardsContainer'>
+          {props.saunas.map(sauna =>(
+            <div className='saunaCard' key={sauna.id}>
+              <Link href={`/${sauna.id}`}>{sauna.name}</Link>
+              <p>{sauna.address}</p>
+            </div>
+          ))}
+      </div>
+    </main>
+  </div>
+  )
+}
+
+
+//data fetching for pre-rendering
+export async function getStaticProps() {
+  //before deploying site set the username/password as environment variables
+  const client = await MongoClient.connect('mongodb+srv://saunApp-user:saunapassword@cluster0.gapzegj.mongodb.net/SaunApp?retryWrites=true&w=majority')
+  const db = client.db()
+  const saunaCollection = db.collection('saunas')
+  const saunas = await saunaCollection.find().toArray()
+  client.close()
+
+  return {
+    props: {
+      saunas: saunas.map(s => ({
+        name: s.name,
+        id: s._id.toString(),
+        address: s.address,
+        saunaType: s.saunaType,
+        website: s.website,
+        description: s.description,
+        swimming: s.swimming,
+        price: s.price,
+        service: s.service
+      }))
+    },
+    //revalidate value can be set lower after adding posibility to add saunas
+    revalidate: 60
+  } 
 }
 
 export default SaunaPage
