@@ -1,24 +1,7 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
-// import {MongoClient} from 'mongodb'
 import { fetchData } from './api/saunas'
-
-
-interface SingleSauna {
-  name: string;
-  id: string;
-  address: string;
-  saunaType: string[];
-  website: string;
-  description: string;
-  swimming: string[];
-  price: number;
-  service: string[]
-}
-
-interface SaunaData {
-  saunas: SingleSauna[];
-}
+import { SaunaData } from './typeDefinitions'
 
 
 function SaunaPage(props: SaunaData) {
