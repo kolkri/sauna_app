@@ -1,3 +1,4 @@
+const {PHASE_DEVELOPMENT_SERVER} = require('next/constants')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -5,3 +6,4 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+

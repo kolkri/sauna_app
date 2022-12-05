@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 function DetailPage() {
     const router = useRouter()
     const saunaId = router.query.saunaId
-    console.log(router.query.saunaId)
 
     return (
         <div className={styles.container}>

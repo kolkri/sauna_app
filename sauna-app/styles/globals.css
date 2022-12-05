@@ -24,3 +24,30 @@ a {
     background: black;
   }
 }
+
+/* Sauna card section styles */
+.cardsContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.saunaCard{
+  width: 48%;
+  aspect-ratio : 1 / 1.4;
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (min-width: 650px) {
+  .saunaCard {
+    width: 32%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .saunaCard {
+    width: 24%;
+  }
+}
