@@ -20,7 +20,6 @@ interface SaunaData {
 
 
 function SaunaPage(props: SaunaData) {
-
   return (
   <div className={styles.container}>
     <main className={styles.main}>
@@ -43,8 +42,7 @@ function SaunaPage(props: SaunaData) {
 
 //data fetching for pre-rendering
 export async function getStaticProps() {
-  //before deploying site set the username/password as environment variables
-  const client = await MongoClient.connect('mongodb+srv://saunApp-user:saunapassword@cluster0.gapzegj.mongodb.net/SaunApp?retryWrites=true&w=majority')
+  const client = await MongoClient.connect(`mongodb+srv://${process.env.NEXT_PUBLIC_DB_USERNAME}:${process.env.NEXT_PUBLIC_DB_PASSWORD}@cluster0.gapzegj.mongodb.net/SaunApp?retryWrites=true&w=majority`)
   const db = client.db()
   const saunaCollection = db.collection('saunas')
   const saunas = await saunaCollection.find().toArray()
