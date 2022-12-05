@@ -1,6 +1,8 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
-import { MongoClient } from 'mongodb'
+// import {MongoClient} from 'mongodb'
+import { fetchData } from './api/saunas'
+
 
 interface SingleSauna {
   name: string;
@@ -42,11 +44,7 @@ function SaunaPage(props: SaunaData) {
 
 //data fetching for pre-rendering
 export async function getStaticProps() {
-  const client = await MongoClient.connect(`mongodb+srv://${process.env.NEXT_PUBLIC_DB_USERNAME}:${process.env.NEXT_PUBLIC_DB_PASSWORD}@cluster0.gapzegj.mongodb.net/SaunApp?retryWrites=true&w=majority`)
-  const db = client.db()
-  const saunaCollection = db.collection('saunas')
-  const saunas = await saunaCollection.find().toArray()
-  client.close()
+  const saunas = await fetchData()
 
   return {
     props: {
