@@ -1,7 +1,14 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import { fetchData } from './api/saunas'
-import { SaunaData } from './typeDefinitions'
+import { SaunaData, SaunaProps } from './typeDefinitions'
+// import Map from '../components/map'
+import dynamic from 'next/dynamic'
+
+const Map = dynamic(() => import('../components/map'), {
+  ssr: false,
+})
+
 
 
 function SaunaPage(props: SaunaData) {
@@ -11,6 +18,7 @@ function SaunaPage(props: SaunaData) {
       <h1 className={styles.title}>
         Saunas page!
       </h1>
+      <Map />
       <div className='cardsContainer'>
           {props.saunas.map(sauna =>(
             <div className='saunaCard' key={sauna.id}>
@@ -26,12 +34,22 @@ function SaunaPage(props: SaunaData) {
 
 
 //data fetching for pre-rendering
-export async function getStaticProps() {
-  const saunas = await fetchData()
+export async function getStaticProps(): Promise<SaunaProps> {
+  //OPTION 1 TO FETCH DATA:
+  //const saunas = await fetchData()
+  
+  //OPTION 2 TO FETCH DATA USING API
+  const saunas: SaunaData = await fetch('http://localhost:3000/api/saunas')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data
+    })
 
   return {
     props: {
-      saunas: saunas.map(s => ({
+      saunas: saunas.saunas.map(s => ({
         name: s.name,
         id: s._id.toString(),
         address: s.address,
@@ -40,7 +58,9 @@ export async function getStaticProps() {
         description: s.description,
         swimming: s.swimming,
         price: s.price,
-        service: s.service
+        service: s.service,
+        latitude: s.latitude,
+        longitude: s.longitude,
       }))
     },
     //revalidate value can be set lower after adding posibility to add saunas
