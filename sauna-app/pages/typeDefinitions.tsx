@@ -1,4 +1,4 @@
-export interface SingleSauna {
+interface SingleSauna {
     name: string;
     id: string;
     address: string;

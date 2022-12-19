@@ -18,11 +18,11 @@ function SaunaPage(props: SaunaData) {
       <h1 className={styles.title}>
         Saunas page!
       </h1>
-      <Map />
+      <Map {...props}/>
       <div className='cardsContainer'>
           {props.saunas.map(sauna =>(
-            <div className='saunaCard' key={sauna.id}>
-              <Link href={`/${sauna.id}`}>{sauna.name}</Link>
+            <div className='saunaCard' key={sauna._id}>
+              <Link href={`/${sauna._id}`}>{sauna.name}</Link>
               <p>{sauna.address}</p>
             </div>
           ))}
@@ -35,10 +35,7 @@ function SaunaPage(props: SaunaData) {
 
 //data fetching for pre-rendering
 export async function getStaticProps(): Promise<SaunaProps> {
-  //OPTION 1 TO FETCH DATA:
-  //const saunas = await fetchData()
-  
-  //OPTION 2 TO FETCH DATA USING API
+
   const saunas: SaunaData = await fetch('http://localhost:3000/api/saunas')
     .then((response) => {
       return response.json();
@@ -51,7 +48,7 @@ export async function getStaticProps(): Promise<SaunaProps> {
     props: {
       saunas: saunas.saunas.map(s => ({
         name: s.name,
-        id: s._id.toString(),
+        _id: s._id.toString(),
         address: s.address,
         saunaType: s.saunaType,
         website: s.website,
