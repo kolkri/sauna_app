@@ -1,8 +1,7 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
-import { fetchData } from './api/saunas'
+import { fetchData} from './api/saunas'
 import { SaunaData, SaunaProps } from './typeDefinitions'
-// import Map from '../components/map'
 import dynamic from 'next/dynamic'
 
 const Map = dynamic(() => import('../components/map'), {
@@ -35,18 +34,12 @@ function SaunaPage(props: SaunaData) {
 
 //data fetching for pre-rendering
 export async function getStaticProps(): Promise<SaunaProps> {
-
-  const saunas: SaunaData = await fetch('http://localhost:3000/api/saunas')
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      return data
-    })
+  
+  const saunas = await fetchData()
 
   return {
     props: {
-      saunas: saunas.saunas.map(s => ({
+      saunas: saunas.map(s => ({
         name: s.name,
         _id: s._id.toString(),
         address: s.address,

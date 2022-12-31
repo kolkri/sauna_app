@@ -1,6 +1,6 @@
 interface SingleSauna {
     name: string;
-    id: string;
+    _id: string;
     address: string;
     saunaType: string[];
     website: string;
@@ -13,7 +13,7 @@ interface SingleSauna {
   }
   
 export interface SaunaData {
-    saunas: SingleSauna[];
+    saunas: SingleSauna[]
   }
 
 export interface SaunaProps {
