@@ -1,12 +1,13 @@
 import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import { fetchData} from './api/saunas'
-import { SaunaData, SaunaProps } from './typeDefinitions'
+import fetchData from '../lib/load-saunas'
+import { SaunaData, SaunaProps } from '../lib/typeDefinitions'
 import dynamic from 'next/dynamic'
+import SaunaCard from '../components/saunacard'
 
 const Map = dynamic(() => import('../components/map'), {
   ssr: false,
 })
+
 
 
 
@@ -18,14 +19,7 @@ function SaunaPage(props: SaunaData) {
         Saunas page!
       </h1>
       <Map {...props}/>
-      <div className='cardsContainer'>
-          {props.saunas.map(sauna =>(
-            <div className='saunaCard' key={sauna._id}>
-              <Link href={`/${sauna._id}`}>{sauna.name}</Link>
-              <p>{sauna.address}</p>
-            </div>
-          ))}
-      </div>
+      <SaunaCard {...props}/>
     </main>
   </div>
   )
@@ -39,19 +33,10 @@ export async function getStaticProps(): Promise<SaunaProps> {
 
   return {
     props: {
-      saunas: saunas.map(s => ({
-        name: s.name,
-        _id: s._id.toString(),
-        address: s.address,
-        saunaType: s.saunaType,
-        website: s.website,
-        description: s.description,
-        swimming: s.swimming,
-        price: s.price,
-        service: s.service,
-        latitude: s.latitude,
-        longitude: s.longitude,
-      }))
+       saunas: saunas.map(s => ({
+        ...s,
+         _id: s._id.toString(),
+       }))
     },
     //revalidate value can be set lower after adding posibility to add saunas
     revalidate: 60
