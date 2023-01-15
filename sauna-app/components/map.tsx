@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer,  TileLayer, Marker, Tooltip} from 'react-leaflet'
 import L from 'leaflet'
 import style from '../styles/Home.module.css'
-import { SaunaData } from '../pages/typeDefinitions'
+import { SaunaData } from '../lib/typeDefinitions'
 
 
 

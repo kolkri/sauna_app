@@ -1,6 +1,8 @@
-interface SingleSauna {
+import { ObjectId } from "mongodb";
+
+export interface SingleSauna {
     name: string;
-    _id: string;
+    _id: string | ObjectId;
     address: string;
     saunaType: string[];
     website: string;
@@ -13,7 +15,7 @@ interface SingleSauna {
   }
   
 export interface SaunaData {
-    saunas: SingleSauna[]
+    saunas: SingleSauna[];
   }
 
 export interface SaunaProps {
