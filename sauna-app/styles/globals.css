@@ -86,6 +86,27 @@ a {
 .saunaCard:hover{
   color: black;
 }
+
+/* Sauna detail pages styles */
+.saunaDetailCard {
+  width: 80%;
+  max-width: 600px;
+  aspect-ratio: 1 / 1;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: black;
+  position: relative;
+}
+
+.backButton{
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+}
 /* MEDIA QUERIES */
 @media screen and (min-width: 650px) {
   .saunaCard {
