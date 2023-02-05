@@ -18,7 +18,15 @@ export interface SaunaData {
     saunas: SingleSauna[];
   }
 
-export interface SaunaProps {
-  props: SaunaData;
-  revalidate: number
-}
+  export interface SaunaProps {
+    props: SaunaData;
+    revalidate: number
+  }
+  
+
+
+  export interface SingleSaunaProps {
+    props: SingleSauna;
+    revalidate: number
+  }
+
