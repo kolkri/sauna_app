@@ -20,7 +20,7 @@ function DetailPage(props: SingleSauna) {
               <p>Swimming: {props.swimming.map(s=> <span>{s} | </span>)}</p>
               <p>Services: {props.service.map(s=> <span>{s} | </span>)}</p>
               <p>Price: {props.price} €</p>
-              <a href={`${props.website}`} target='_blank' >Link to webpage of sauna</a>
+              <a href={`${props.website}`}>Link to webpage of sauna</a>
             </div>
           </main>
         </div>
