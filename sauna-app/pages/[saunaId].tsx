@@ -16,9 +16,9 @@ function DetailPage(props: SingleSauna) {
             <div className='saunaDetailCard'>
               <p>Address: {props.address}</p>
               <p>Description: {props.description}</p>
-              <p>Saunas: {props.saunaType.map(s=> <span>{s} | </span>)}</p>
-              <p>Swimming: {props.swimming.map(s=> <span>{s} | </span>)}</p>
-              <p>Services: {props.service.map(s=> <span>{s} | </span>)}</p>
+              <p>Saunas: {props.saunaType.map(s=> <span key={s}>{s} | </span>)}</p>
+              <p>Swimming: {props.swimming.map(s=> <span key={s}>{s} | </span>)}</p>
+              <p>Services: {props.service.map(s=> <span key={s}>{s} | </span>)}</p>
               <p>Price: {props.price} €</p>
               <a href={`${props.website}`}>Link to webpage of sauna</a>
             </div>
